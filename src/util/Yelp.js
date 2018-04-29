@@ -6,10 +6,11 @@ const Yelp = {
       headers: {
         Authorization: `Bearer ${apiKey}`
       }
-    }).then(response => response.json()).then(jsonResponse => {
+    }).then(response => {
+      return response.json();
+    }).then(jsonResponse => {
     if (jsonResponse.businesses) {
-      jsonResponse.businesses.map(business => {
-         return {
+      return jsonResponse.businesses.map(business => ({
           id: business.id,
           imageSrc: business.image_url,
           name: business.name,
@@ -19,9 +20,8 @@ const Yelp = {
           category: business.categories[0].title,
           rating: business.rating,
           reviewCount: business.review_count
-        }
-      });
-    }
+        }));
+      }
   });
   }
 };
